@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { tokens } from "../../tokens";
@@ -7,7 +8,7 @@ type CommentPillButtonProps = {
   onPress?: () => void;
 };
 
-export const CommentPillButton = ({
+const CommentPillButtonComponent = ({
   commentsCount,
   onPress,
 }: CommentPillButtonProps) => (
@@ -21,6 +22,8 @@ export const CommentPillButton = ({
     <Text style={styles.pillCount}>{commentsCount}</Text>
   </Pressable>
 );
+
+export const CommentPillButton = memo(CommentPillButtonComponent);
 
 const styles = StyleSheet.create({
   pill: {

@@ -1,11 +1,12 @@
-import { Ionicons } from "@expo/vector-icons";
+import { memo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { tokens } from "../../tokens";
+import { SubtractIcon } from "../../../assets/components/SubtractIcon";
 
-export const PaidPostOverlay = () => (
+const PaidPostOverlayComponent = () => (
   <View style={styles.paidOverlay}>
     <View style={styles.paidIconWrap}>
-      <Ionicons name="logo-usd" size={20} color="#6D28D9" />
+      <SubtractIcon />
     </View>
     <Text style={styles.paidText}>
       Контент скрыт пользователем.{"\n"}Доступ откроется после доната
@@ -20,10 +21,11 @@ export const PaidPostOverlay = () => (
   </View>
 );
 
+export const PaidPostOverlay = memo(PaidPostOverlayComponent);
+
 const styles = StyleSheet.create({
   paidOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(15, 23, 42, 0.56)",
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 24,

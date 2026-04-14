@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
@@ -10,7 +10,6 @@ import { ErrorState } from '../ErrorState';
 import { LoadingFooter } from '../LoadingFooter';
 import { PostCard } from '../PostCard';
 
-// Figma: https://www.figma.com/design/bAxXrk7TaPN13TZ60yf7uD/Test-Assignment?node-id=0-1
 export const FeedScreen = observer(() => {
   const {
     data,
@@ -28,7 +27,10 @@ export const FeedScreen = observer(() => {
       lastPage.hasMore ? lastPage.nextCursor ?? undefined : undefined,
   });
 
-  const posts = data?.pages.flatMap((page) => page.posts) ?? [];
+  const posts = useMemo(
+    () => data?.pages.flatMap((page) => page.posts) ?? [],
+    [data],
+  );
 
   const handleRefresh = useCallback(async () => {
     feedUiStore.setRefreshing(true);
@@ -85,13 +87,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: tokens.colors.background,
     paddingTop: tokens.spacing.xl * 2,
-  },
-  title: {
-    color: tokens.colors.textPrimary,
-    fontSize: tokens.typography.title,
-    fontWeight: '700',
-    paddingHorizontal: tokens.spacing.lg,
-    paddingBottom: tokens.spacing.md,
   },
   listContent: {
     paddingHorizontal: 0,
